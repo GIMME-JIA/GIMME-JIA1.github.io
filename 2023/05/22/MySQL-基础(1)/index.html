@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 7.0.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>MySQL-基础(1) - 小破站</title>
+
+  
+    <meta name="description" content="MySQL数据库基础部分的学习笔记，SQL的基本认识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL-基础(1)">
+<meta property="og:url" content="https://strivingto.top/2023/05/22/MySQL-%E5%9F%BA%E7%A1%80(1)/index.html">
+<meta property="og:site_name" content="小破站">
+<meta property="og:description" content="MySQL数据库基础部分的学习笔记，SQL的基本认识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.ibb.co/pvWN2qc/2023-03-23-202837.png">
+<meta property="og:image" content="https://i.ibb.co/PgYktdG/2023-03-18-203258.png">
+<meta property="article:published_time" content="2023-05-22T03:51:53.000Z">
+<meta property="article:modified_time" content="2023-12-27T13:20:05.216Z">
+<meta property="article:author" content="Echo">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.ibb.co/pvWN2qc/2023-03-23-202837.png">
+  
+  
+  
+  <meta name="keywords" content="MySQL">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://i.ibb.co/t8bH857/avatar.png">
+  
+
+  
+
+  
+
+
+  
+    
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+<div class="l_cover post"><div class="cover"><div class="lazy img bg" data-bg="https://source.unsplash.com/2000x400/?nature,beautiful"></div></div></div>
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://i.ibb.co/t8bH857/avatar.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Echo</div><div class="sub normal cap">种一棵树最好的时间是十年前</div><div class="sub hover cap" style="opacity:0"> 其次是现在</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item" href="/more/">更多</a><a class="nav-item" href="/friends/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
+</header>
+
+
+<div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">MySQL-基础(1)</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">数据库相关概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%EF%BC%88%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%EF%BC%89"><span class="toc-text">MySQL体系结构（存储引擎）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E9%80%9A%E7%94%A8%E8%AF%AD%E6%B3%95"><span class="toc-text">SQL通用语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E5%88%86%E7%B1%BB"><span class="toc-text">SQL分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDL-%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80"><span class="toc-text">DDL  数据定义语言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-2"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">操作数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E8%A1%A8"><span class="toc-text">操作表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DML-%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80"><span class="toc-text">DML 数据操作语言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-3"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE"><span class="toc-text">添加数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="toc-text">修改数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-text">删除数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DQL-%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80"><span class="toc-text">DQL 数据查询语言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-4"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%9F%A5%E8%AF%A2"><span class="toc-text">基础查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2-WHERE"><span class="toc-text">条件查询  WHERE</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6"><span class="toc-text">条件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E6%9F%A5%E8%AF%A2-ORDER-BY"><span class="toc-text">排序查询  ORDER BY</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F"><span class="toc-text">排序方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2-GROUP-BY"><span class="toc-text">分组查询 GROUP BY</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="toc-text">聚合函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="toc-text">概念：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-text">分类</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2%E8%AF%AD%E6%B3%95"><span class="toc-text">分组查询语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WHERE-%E5%92%8C-HAVING-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">WHERE 和 HAVING 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%EF%BC%9AWHERE-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0-HAVING"><span class="toc-text">执行顺序：WHERE &gt; 聚合函数 &gt; HAVING</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2-LIMIT-MySQL%E4%B8%93%E7%94%A8"><span class="toc-text">分页查询 LIMIT(MySQL专用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-text">查询的执行顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DCL-%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80-%E4%B8%8D%E5%B8%B8%E7%94%A8"><span class="toc-text">DCL 数据控制语言(不常用)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-5"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E7%94%A8%E6%88%B7"><span class="toc-text">管理用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-text">权限控制</span></a></li></ol></li></ol></div></div></widget>
+
+
+
+
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/GIMME-JIA" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/t8bH857/avatar.png"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/placeholder/social/3845874.svg"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/placeholder/social/3616429.svg"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/placeholder/social/942ebbf1a4b91.svg"/></a></div></footer>
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-05-22T03:51:53.000Z">2023-05-22</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>MySQL-基础(1)</span></h1>
+<h2 id="数据库相关概念">数据库相关概念</h2>
+<h3 id="简介">简介</h3>
+<p>关系型数据库是建立在关系模型基础上的数据库，即由多张能够相互连接的二维表组成。</p>
+<h3 id="MySQL体系结构（存储引擎）">MySQL体系结构（存储引擎）</h3>
+<ul>
+<li>连接层</li>
+</ul>
+<p>最上层是一些客户端和连接服务，主要完成类似于连接处理、授权认证、及相关处理方案。服务器也会为安全接入的每个客户端验证它所具有的操作权限。</p>
+<ul>
+<li>服务层</li>
+</ul>
+<p>第二层架构主要完成大多数的核心服务功能，如SQL接口，并完成缓存的查询，SQL的分析和优化，部分内置函数的执行。所有跨存储引擎的功能也在这一层实现，如 过程、函数等。</p>
+<ul>
+<li>引擎层</li>
+</ul>
+<p>存储引擎真正的负责了MySQL中数据的存储和获取，服务器通过API和存储引擎进行通信。不同的存储引擎具有不同的功能，这样我们可以根据自己的需要，来选取合适的存储引擎。</p>
+<ul>
+<li>存储层</li>
+</ul>
+<p>主要是将数据存储在文件系统上，并完成存储引擎的交互。</p>
+<h3 id="SQL通用语法">SQL通用语法</h3>
+<ol>
+<li>可以单行或多行书写，以分号结尾。</li>
+<li>不区分大小写，关键字建议大写。</li>
+<li>注释：</li>
+</ol>
+<ul>
+<li>单行注释：-- 内容  或  #内容</li>
+<li>多行注释：/<em>内容</em>/</li>
+</ul>
+<h3 id="SQL分类">SQL分类</h3>
+<ul>
+<li><strong>DDL 数据库定义语言</strong>( DATA DEFINITION  LANGUAGE )</li>
+</ul>
+<p>用来定义数据对象：数据库、列、表……</p>
+<ul>
+<li><strong>DML 数据操作语言</strong>( DATA MANIPULATION LANGUAGE )</li>
+</ul>
+<p>用来对数据库中表的增删改</p>
+<ul>
+<li><strong>DQL 数据查询语言</strong>( DATA QUERY LANGUAGE )</li>
+</ul>
+<p>查询数据库中表的记录（数据）</p>
+<ul>
+<li><strong>DCL 数据控制语言</strong>( DATA CONTROL LANGUAGE )</li>
+</ul>
+<p>定义数据库的访问权限和安全级别，及创建用户</p>
+<h2 id="DDL-数据定义语言">DDL  数据定义语言</h2>
+<h3 id="简介-2">简介</h3>
+<ul>
+<li><strong>DDL 数据库定义语言</strong>( DATA DEFINITION  LANGUAGE )</li>
+</ul>
+<p>用来定义数据对象：数据库、列、表……</p>
+<h3 id="操作数据库">操作数据库</h3>
+<ul>
+<li>
+<p><strong>查询数据库</strong><br />
+-</p>
+</li>
+<li>
+<p><strong>创建数据库</strong><br />
+- CREATE DATABASE 库名；<br />
+- CREATE DATABASE IF NOT EXISTS 库名；</p>
+</li>
+<li>
+<p><strong>删除数据库</strong><br />
+- DROP DATABASE 库名；<br />
+- DROP DATABASE IF EXISTS 库名；</p>
+</li>
+<li>
+<p><strong>使用数据库</strong><br />
+- USE 库名；</p>
+</li>
+</ul>
+<h3 id="操作表">操作表</h3>
+<ul>
+<li><strong>查询表</strong>：查询当前数据库下所有表的名称<br />
+- SHOW TABLES;</li>
+<li><strong>创建表</strong><br />
+- CREATE TABLE 表名(<br />
+- 字段名1 数据类型1，<br />
+- 字段名2 数据类型2，<br />
+- ……<br />
+- );</li>
+<li><strong>删除表</strong><br />
+- DROP TABLE 表名；<br />
+- DROP TABLE IF EXISTS 表名；</li>
+<li><strong>修改表</strong><br />
+- 修改表名<br />
+- ALTER TABLE 原表名 RENAME TO 新表名；<br />
+- 添加一列<br />
+- ALTER TABLE 表名 ADD 列名 数据类型；<br />
+- 修改数据类型<br />
+- ALTER TABLE 表名 MODIFY 列名 新数据类型；<br />
+- 修改列名和数据类型<br />
+- ALTER TABLE 表名 CHANGE 列名 新列名 新数据类型；<br />
+- 删除列<br />
+- ALTER TABLE 表名 DROP 列名；</li>
+</ul>
+<h2 id="DML-数据操作语言">DML 数据操作语言</h2>
+<h3 id="简介-3">简介</h3>
+<ul>
+<li><strong>DML 数据操作语言</strong>( DATA MANIPULATION LANGUAGE )</li>
+</ul>
+<p>用来对数据库中表的增删改</p>
+<h3 id="添加数据">添加数据</h3>
+<ul>
+<li>插入数据时，指定的字段顺序需要与值的顺序是一一对应的</li>
+<li>字符串和日期型数据应该包含在引导中</li>
+<li>插入的数据大小，应该在字段的规定范围内</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- 给指定列添加数据</span><br><span class="line">    INSERT INTO 表名(列名1，列名2，……) VALUES(值1，值2，……);</span><br><span class="line">-- 给全部列添加数据</span><br><span class="line">    INSERT INTO 表名 VALUES(值1，值2，……);</span><br><span class="line">-- 批量添加</span><br><span class="line">    INSERT INTO 表名 (列1，列2，……) VALUES(值1，值2，……),(值1，值2，……)，……;</span><br><span class="line">    INSERT INTO 表名 VALUES(值1，值2，……),(值1，值2，……)，……;</span><br></pre></td></tr></table></figure></div></div>
+<h3 id="修改数据">修改数据</h3>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATA 表名 <span class="keyword">SET</span> 列名<span class="number">1</span> <span class="operator">=</span> 值<span class="number">1</span>，列名<span class="number">2</span> <span class="operator">=</span> 值<span class="number">2</span>，……   [<span class="keyword">WHERE</span> 条件]；</span><br></pre></td></tr></table></figure></div></div>
+<p>注：修改语句中如果不加条件，将修改所有数据</p>
+<h3 id="删除数据">删除数据</h3>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名[<span class="keyword">WHERE</span> 条件];</span><br></pre></td></tr></table></figure></div></div>
+<h2 id="DQL-数据查询语言">DQL 数据查询语言</h2>
+<h3 id="简介-4">简介</h3>
+<ul>
+<li><strong>DQL 数据查询语言</strong>( DATA QUERY LANGUAGE )</li>
+</ul>
+<p>查询数据库中表的记录（数据）</p>
+<h3 id="基础查询">基础查询</h3>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 查询多个字段</span><br><span class="line">SELECT 列名1，列名2，...FROM 表名;</span><br><span class="line"></span><br><span class="line">SELECT * FROM 表名;-- (直接查询全部)</span><br><span class="line">注：不建议使用第二种，使得代码可读性降低。</span><br><span class="line"></span><br><span class="line">-- 设置别名</span><br><span class="line">SELECT 字段1[AS 别名1],字段2[AS 别名2],... FROM 表名;</span><br><span class="line">-- AS可以省略</span><br><span class="line"></span><br><span class="line">-- 去除重复记录</span><br><span class="line">SELECT DISTINCT 字段列表 FROM 表名;</span><br></pre></td></tr></table></figure></div></div>
+<h3 id="条件查询-WHERE">条件查询  WHERE</h3>
+<ul>
+<li>SELECT 字段列表 FROM 表名 WHERE 条件列表；</li>
+</ul>
+<h4 id="条件">条件</h4>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;&gt;  或  !=</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>=</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>BETWEEN …AND…</td>
+<td>在某个范围内</td>
+</tr>
+<tr>
+<td>（数值范围从小到大，否则查询不到）</td>
+<td></td>
+</tr>
+<tr>
+<td>AND  或  &amp;&amp;</td>
+<td>并且</td>
+</tr>
+<tr>
+<td>OR  或  ||</td>
+<td>或者</td>
+</tr>
+<tr>
+<td>IN(…)</td>
+<td>多选一</td>
+</tr>
+<tr>
+<td>NOT  或  ！</td>
+<td>非，不是</td>
+</tr>
+<tr>
+<td>IS NULL</td>
+<td>是空</td>
+</tr>
+<tr>
+<td>IS NOT NULL</td>
+<td>非空</td>
+</tr>
+<tr>
+<td>LIKE 占位符</td>
+<td>模糊查询：</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>_单个任意字符</li>
+<li>%多个任意字符<br />
+|</li>
+</ul>
+<p>注：NULL值得比较不能用=   != ，需要用IS   IS NOT;<br />
+BETWEEN…AND和IN(…)区别：前者是取值范围内允许，后者是具体值选其一</p>
+<h3 id="排序查询-ORDER-BY">排序查询  ORDER BY</h3>
+<ul>
+<li>SELECT 字段列表 FROM 表名 ORDER BY 排序字段名1[排序方式1] , 排序字段名2[排序方式2] , ……；</li>
+</ul>
+<h4 id="排序方式">排序方式</h4>
+<pre><code>  - ASC：升序（默认）
+  - DESC：降序
+</code></pre>
+<p>注：有多个条件时，当前边条件值一样时，才会根据第二个条件进行排序</p>
+<h3 id="分组查询-GROUP-BY">分组查询 GROUP BY</h3>
+<h4 id="聚合函数">聚合函数</h4>
+<h5 id="概念：">概念：</h5>
+<p>将一列数据作为一个整体，纵向计算。所有NULL值不参与运算</p>
+<h5 id="分类">分类</h5>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>COUNT(列名)</td>
+<td>统计数量（一般不为NULL值）</td>
+</tr>
+<tr>
+<td>列名取值：1. 主键 ，2. *</td>
+<td></td>
+</tr>
+<tr>
+<td>MAX(列名)</td>
+<td>最大值</td>
+</tr>
+<tr>
+<td>MIN(列名)</td>
+<td>最小值</td>
+</tr>
+<tr>
+<td>SUM(列名)</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>AVG(列名)</td>
+<td>求平均</td>
+</tr>
+</tbody>
+</table>
+<h4 id="分组查询语法">分组查询语法</h4>
+<ul>
+<li>SECLECT 聚合函数(字段列表) FROM 表名 [WHERE 分组前提条件限定] GROUP BY 分组字段名 [HAVING 分组后过滤条件]；</li>
+</ul>
+<p>注：分组后，查询的字段为聚合函数和分组字段，查询其他字段无任何意义。</p>
+<h4 id="WHERE-和-HAVING-的区别">WHERE 和 HAVING 的区别</h4>
+<ol>
+<li><strong>执行时机不同</strong>：WHERE 时分组之前进行条件限定，不满足WHERE条件则不参与分组，而HAVING是分组后对结果进行过滤。</li>
+<li><strong>可判断的条件不同</strong>：WHERE 不能对聚合函数进行判断，HAVING 可以。</li>
+</ol>
+<h5 id="执行顺序：WHERE-聚合函数-HAVING"><strong>执行顺序</strong>：<em>WHERE &gt; 聚合函数 &gt; HAVING</em></h5>
+<h3 id="分页查询-LIMIT-MySQL专用">分页查询 LIMIT(MySQL专用)</h3>
+<ul>
+<li>SELECT 字段列表 FROM 表名 LIMIT 起始索引，查询条目数；</li>
+</ul>
+<p>计算公式：<em><em>起始索引 = （当前页码 - 1）</em> 每页显示条数</em>*</p>
+<h3 id="查询的执行顺序"><strong>查询的执行顺序</strong></h3>
+<p>FROM…<br />
+-&gt;WHERE…<br />
+-&gt;SELECT…<br />
+-&gt;ORDER BY…<br />
+-&gt;LIMIT…</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/pvWN2qc/2023-03-23-202837.png"/></div></div>
+<h2 id="DCL-数据控制语言-不常用">DCL 数据控制语言(不常用)</h2>
+<h3 id="简介-5">简介</h3>
+<ul>
+<li><strong>DCL 数据控制语言</strong>( DATA CONTROL LANGUAGE )</li>
+</ul>
+<p>定义数据库的访问权限和安全级别，及创建用户</p>
+<h3 id="管理用户">管理用户</h3>
+<ul>
+<li>查询用户</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USE 用户名;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">user</span>;</span><br></pre></td></tr></table></figure></div></div>
+<ul>
+<li>创建用户</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机名&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;密码&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div>
+<ul>
+<li>修改用户密码</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机名&#x27;</span> IDENTIFIED <span class="keyword">WITH</span> mysql_native_password <span class="keyword">BY</span> <span class="string">&#x27;新密码&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div>
+<ul>
+<li>删除用户</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机名&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div>
+<h3 id="权限控制">权限控制</h3>
+<ul>
+<li>查询权限</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机名&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div>
+<ul>
+<li>授予权限</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> 权限列表 <span class="keyword">ON</span> 数据库名.表名 <span class="keyword">TO</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机名&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div>
+<ul>
+<li>撤销权限</li>
+</ul>
+<div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">REVOKE</span> 权限列表 <span class="keyword">ON</span> 数据库名.表名 <span class="keyword">FROM</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机名&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/PgYktdG/2023-03-18-203258.png"/></div></div>
+
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/05/25/MySQL-%E5%9F%BA%E7%A1%80(2)/">MySQL-基础(2)</a></div><div class="item" id="next"></div></section></div>
+
+
+<div class="related-wrap reveal" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣的文章</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="\2023\05\25\MySQL-基础(2)\" title="MySQL-基础(2)"><span class="title">MySQL-基础(2)</span><span class="excerpt">MySQL数据库基础部分的学习笔记，函数、约束、多表查询以及事务的认识。</span></a><a class="item" href="\2023\12\24\JVM-字节码文件\" title="JVM-字节码文件"><span class="title">JVM-字节码文件</span><span class="excerpt">学习字节码文件的组成和常见的字节码指令，以及相关的字节码工具。</span></a></div></section></div>
+
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br />
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

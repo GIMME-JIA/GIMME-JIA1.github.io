@@ -20,25 +20,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>b - 小破站</title>
+  <title>JVM-字节码文件 - 小破站</title>
 
   
-    <meta name="description" content="范例二">
+    <meta name="description" content="学习字节码文件的组成和常见的字节码指令，以及相关的字节码工具。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="b">
-<meta property="og:url" content="https://strivingto.top/2023/11/24/b/index.html">
+<meta property="og:title" content="JVM-字节码文件">
+<meta property="og:url" content="https://strivingto.top/2023/12/24/JVM-%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="小破站">
-<meta property="og:description" content="范例二">
+<meta property="og:description" content="学习字节码文件的组成和常见的字节码指令，以及相关的字节码工具。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-24T11:16:41.000Z">
-<meta property="article:modified_time" content="2023-11-26T11:21:20.214Z">
+<meta property="og:image" content="https://i.ibb.co/9V9mryf/Snipaste-2023-12-23-10-09-56.png">
+<meta property="og:image" content="https://i.ibb.co/bWmZn12/Snipaste-2023-12-23-09-55-33.png">
+<meta property="og:image" content="https://i.ibb.co/PmmGHYz/Snipaste-2023-12-23-09-56-05.png">
+<meta property="og:image" content="https://i.ibb.co/TRLThZv/Snipaste-2023-12-23-09-56-30.png">
+<meta property="og:image" content="https://i.ibb.co/c1gjX1j/Snipaste-2023-12-23-10-01-25.png">
+<meta property="og:image" content="https://i.ibb.co/Y2k9hJk/Snipaste-2023-12-23-10-14-19.png">
+<meta property="og:image" content="https://i.ibb.co/S5LWtKP/Snipaste-2023-12-23-10-17-25.png">
+<meta property="article:published_time" content="2023-12-24T12:42:16.000Z">
+<meta property="article:modified_time" content="2023-12-27T13:13:19.167Z">
 <meta property="article:author" content="Echo">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.ibb.co/9V9mryf/Snipaste-2023-12-23-10-09-56.png">
   
   
   
-  <meta name="keywords" content="Java">
+  <meta name="keywords" content="JVM">
 
   <!-- feed -->
   
@@ -87,7 +95,7 @@
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
 
-<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">b</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E6%98%AF"><span class="toc-text">不是</span></a></li></ol></div></div></widget>
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">JVM-字节码文件</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">字节码文件的组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-text">字节码常用工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E9%87%8C-Arthas"><span class="toc-text">阿里 Arthas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jclasslib"><span class="toc-text">jclasslib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javap-v-%E5%91%BD%E4%BB%A4"><span class="toc-text">javap -v 命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6"><span class="toc-text">阅读字节码文件</span></a></li></ol></div></div></widget>
 
 
 
@@ -103,20 +111,92 @@
 
 
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-11-24T11:16:41.000Z">2023-11-24</time></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-12-24T12:42:16.000Z">2023-12-24</time></div></div>
 
 <article class='md-text content post'>
-<h1 class="article-title"><span>b</span></h1>
-<h1>还行</h1>
-<h2 id="不是">不是</h2>
+<h1 class="article-title"><span>JVM-字节码文件</span></h1>
+<h2 id="字节码文件的组成">字节码文件的组成</h2>
 <ul>
-<li>啊</li>
-<li>这</li>
+<li><strong>基本信息</strong>
+<ul>
+<li>包含了字节码文件的版本信息和其他一些元数据。字节码文件头部的魔数（ca fe ba be）用于告诉Java虚拟机，这个文件是一个合法的Java类文件，它可能会包含一些其他的元数据，例如编译器版本信息（JDK版本 = 主版本号 - 44），字节码文件的编译日期、父类和接口等。</li>
 </ul>
-<ol>
-<li>不是吧</li>
-<li>哦哦</li>
-</ol>
+</li>
+</ul>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/9V9mryf/Snipaste-2023-12-23-10-09-56.png"/></div></div>
+<ul>
+<li><strong>常量池</strong>
+<ul>
+<li>包含了程序中使用到的各种常量，这些常量包括数字、字符串、类名、方法名等等。Java虚拟机在运行时需要用到常量池，因为Java虚拟机中的很多指令操作都需要用到常量池中的一些值。</li>
+</ul>
+</li>
+</ul>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/bWmZn12/Snipaste-2023-12-23-09-55-33.png"/></div></div>
+<ul>
+<li><strong>字段</strong>
+<ul>
+<li>描述了一个类中的所有字段。字段包括其类型、名称和访问标志。在Java中，所有类中都有构造器和至少一个初始化方法（主方法）。</li>
+</ul>
+</li>
+</ul>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/PmmGHYz/Snipaste-2023-12-23-09-56-05.png"/></div></div>
+<ul>
+<li>
+<p><strong>方法</strong></p>
+<ul>
+<li>描述了一个类中的所有方法。方法包括其名称、参数类型和返回类型，同时也包括方法的字节码指令和异常处理信息。通过这些方法，Java虚拟机能够理解程序中要执行的代码逻辑。</li>
+</ul>
+</li>
+</ul>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/TRLThZv/Snipaste-2023-12-23-09-56-30.png"/></div></div>
+<ul>
+<li>
+<p><strong>属性</strong></p>
+<ul>
+<li>这一部分用于保存一些额外的元数据，例如Java中的注解信息等。</li>
+</ul>
+</li>
+<li>
+<p><strong>接口</strong></p>
+<ul>
+<li>描述了所有实现或继承的接口。接口是Java中一种很重要的方式，用于描述要实现或者继承的共同特征和行为。它们允许Java程序员通过一个类继承和实现多种类型，从而获得最大程度的复用和可扩展性。</li>
+</ul>
+</li>
+</ul>
+<h2 id="字节码常用工具">字节码常用工具</h2>
+<h3 id="阿里-Arthas">阿里 Arthas</h3>
+<ul>
+<li>是一款线上监控诊断产品，通过全局视角实时查看应用 load、内存、gc、线程的状态信息，并能在不修改应用代码的情况下，对业务问题进行诊断，大大提升线上问题排查效率。</li>
+</ul>
+<blockquote>
+<p>官网：<a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/">https://arthas.aliyun.com/doc/</a></p>
+</blockquote>
+<ul>
+<li>dump 类的全限定名：dump已加载类的字节码文件到特定目录。</li>
+<li>jad 类的全限定名： 反编译已加载类的源码。</li>
+</ul>
+<blockquote>
+<p>启动 Arthas： java -jar arthas-boot.jar</p>
+</blockquote>
+<h3 id="jclasslib">jclasslib</h3>
+<p>既有 pc 端 app，也有Idea插件版本，建议开发时使用Idea插件版本，可以在代码编译之后实时看到字节码文件内容。</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/c1gjX1j/Snipaste-2023-12-23-10-01-25.png"/></div></div>
+<blockquote>
+<p>Github地址： <a target="_blank" rel="noopener" href="https://github.com/ingokegel/jclasslib">https://github.com/ingokegel/jclasslib</a></p>
+</blockquote>
+<h3 id="javap-v-命令">javap -v 命令</h3>
+<ul>
+<li>javap是JDK自带的反编译工具，可以通过控制台查看字节码文件的内容。适合在服务器上查看字节码文件容。</li>
+<li>直接输入javap查看所有参数。</li>
+<li>输入javap -v 字节码文件名称 查看具体的字节码息。（如果jar包需要先使用 jar –xvf 命令解压）</li>
+</ul>
+<h2 id="阅读字节码文件">阅读字节码文件</h2>
+<ul>
+<li>”<strong>显示 jvm 规范</strong>“看查看每条字节码指令所表示含义</li>
+<li>字节码中的方法区域是存放字节码指令的核心位置，字节码指令的内容存放在方法的Code属性中。</li>
+</ul>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/Y2k9hJk/Snipaste-2023-12-23-10-14-19.png"/></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/S5LWtKP/Snipaste-2023-12-23-10-17-25.png"/></div></div>
 
 
 
@@ -125,7 +205,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/12/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E9%80%92%E5%BD%92/">数据结构—递归</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/11/23/a/">a</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/12/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E9%80%92%E5%BD%92/">数据结构—递归</a></div></section></div>
 
 
 <div class="related-wrap reveal" id="related-posts">
