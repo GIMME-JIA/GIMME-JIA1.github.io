@@ -23,45 +23,44 @@
   <title>JVM-类的生命周期 - 小破站</title>
 
   
-    <meta name="description" content="生命周期概述 在 Java 中数据类型分为基本数据类型和引用数据类型。基本数据类型由虚拟机预先定义，引用数据类型则需要进行类的加载。 按照 Java 虚拟机规范，从 class 文件到加载到内存中的类，到类卸载出内存为止，完整生命周期包括如下 7 个阶段：  加载 Loading 连接 Linking  验证 准备 解析   初始化 Initization 使用 Using 卸载 Unloadin">
+    <meta name="description" content="类的生命周期的认识">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM-类的生命周期">
 <meta property="og:url" content="https://strivingto.top/2023/12/25/JVM-%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
 <meta property="og:site_name" content="小破站">
-<meta property="og:description" content="生命周期概述 在 Java 中数据类型分为基本数据类型和引用数据类型。基本数据类型由虚拟机预先定义，引用数据类型则需要进行类的加载。 按照 Java 虚拟机规范，从 class 文件到加载到内存中的类，到类卸载出内存为止，完整生命周期包括如下 7 个阶段：  加载 Loading 连接 Linking  验证 准备 解析   初始化 Initization 使用 Using 卸载 Unloadin">
+<meta property="og:description" content="类的生命周期的认识">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304515071-9c84d7ba-a31b-48d9-aa8c-3633844b9f38.png#averageHue=%23eaded2&clientId=ubd0b25dd-ffb0-4&from=ui&id=u239e5224&originHeight=624&originWidth=1491&originalType=binary&ratio=1&rotation=0&showTitle=false&size=226856&status=done&style=none&taskId=u31358e3e-e907-4e6e-ba68-94dc6971f14&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703301222609-eff3807c-7a39-4083-8273-f7975cec55b4.png#averageHue=%23b2ba99&clientId=u2dee7e63-a318-4&from=ui&height=299&id=u5388f7dd&originHeight=548&originWidth=1346&originalType=binary&ratio=1&rotation=0&showTitle=false&size=185239&status=done&style=none&taskId=u4b412773-3417-4515-9e9e-1854cd54596&title=&width=735">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703301444593-22266dcd-047e-4ec8-833e-33f32235027c.png#averageHue=%23f5eac5&clientId=ubd0b25dd-ffb0-4&from=ui&id=u25220795&originHeight=537&originWidth=1345&originalType=binary&ratio=1&rotation=0&showTitle=false&size=225096&status=done&style=none&taskId=u8fa3c99d-040f-49c1-b717-e0732e119a5&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703301887484-8e6cd52b-65e2-492c-96c5-308bb641ae01.png#averageHue=%23f5d14c&clientId=ubd0b25dd-ffb0-4&from=ui&id=ud3d40358&originHeight=516&originWidth=1391&originalType=binary&ratio=1&rotation=0&showTitle=false&size=151700&status=done&style=none&taskId=ud316340b-a081-43cf-b0cb-532fd6ba00a&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703302432992-a751c784-8f22-46b8-9b49-ba6da6ba67a8.png#averageHue=%23f0e20d&clientId=ubd0b25dd-ffb0-4&from=ui&id=ubb945a5c&originHeight=516&originWidth=1105&originalType=binary&ratio=1&rotation=0&showTitle=false&size=155642&status=done&style=none&taskId=ufb8a41e3-cb3c-490e-865a-683df51c714&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304346512-657d2a8e-38f6-4e8a-b30d-1015d32978c4.png#averageHue=%23e7dbd4&clientId=ubd0b25dd-ffb0-4&from=ui&id=ued6c7032&originHeight=490&originWidth=773&originalType=binary&ratio=1&rotation=0&showTitle=false&size=174609&status=done&style=none&taskId=uf3ab314f-0a7b-466e-8bce-d28902b7ca0&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304709948-b748208e-279e-457d-9e77-37d7fb9a266c.png#averageHue=%23ececec&clientId=ubd0b25dd-ffb0-4&from=ui&id=u9d700ae0&originHeight=318&originWidth=1132&originalType=binary&ratio=1&rotation=0&showTitle=false&size=212448&status=done&style=none&taskId=ufb4139a1-9eeb-48f8-ab80-0d1f8f57734&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304775995-4edad103-5be1-4d9d-b70e-437135b69b69.png#averageHue=%23f0eeee&clientId=ubd0b25dd-ffb0-4&from=ui&id=ub24c99f3&originHeight=303&originWidth=529&originalType=binary&ratio=1&rotation=0&showTitle=false&size=59753&status=done&style=none&taskId=u245a1076-4c16-4162-a577-e40f030b6b8&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304808638-342a933f-c90a-4239-ae2b-03b0b5fdd92b.png#averageHue=%23e4e0d7&clientId=ubd0b25dd-ffb0-4&from=ui&id=u3f6236a1&originHeight=263&originWidth=419&originalType=binary&ratio=1&rotation=0&showTitle=false&size=49757&status=done&style=none&taskId=u11050504-f6e9-4036-a0c0-708acf3cbb3&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305000215-23fd420c-e7f8-4be3-ba94-523fe835ce2a.png#averageHue=%23f1eeeb&clientId=ubd0b25dd-ffb0-4&from=ui&id=u38cf471a&originHeight=595&originWidth=1441&originalType=binary&ratio=1&rotation=0&showTitle=false&size=487034&status=done&style=none&taskId=ub02bbab8-7925-47c7-add5-f334044c480&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305135702-5644357f-f386-47d2-95ea-34f648f49dc5.png#averageHue=%23f4ec70&clientId=ubd0b25dd-ffb0-4&from=ui&id=uf991c8c7&originHeight=413&originWidth=1405&originalType=binary&ratio=1&rotation=0&showTitle=false&size=139016&status=done&style=none&taskId=u0075bca9-e9fb-41ed-8e6a-ddc9e62ed36&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305338349-a45ff6f9-20db-47b3-8fbf-925ed82a7fb4.png#averageHue=%23e3d4d3&clientId=ubd0b25dd-ffb0-4&from=ui&id=u316b93e5&originHeight=464&originWidth=1387&originalType=binary&ratio=1&rotation=0&showTitle=false&size=92646&status=done&style=none&taskId=ucbb3fca0-cf25-46ca-bfe4-9bc5ee7a361&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305547539-1fe1b66c-6f79-46b5-8be2-b0863910720e.png#averageHue=%23f5ed78&clientId=ubd0b25dd-ffb0-4&from=ui&id=ub006db1b&originHeight=408&originWidth=1289&originalType=binary&ratio=1&rotation=0&showTitle=false&size=126241&status=done&style=none&taskId=u5b31d065-0346-4953-ae9a-f9be5199203&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305953903-edaf198c-d853-4a81-9cf0-5fb1f80b6c7d.png#averageHue=%23eeeded&clientId=ubd0b25dd-ffb0-4&from=ui&height=327&id=u5df23c80&originHeight=509&originWidth=763&originalType=binary&ratio=1&rotation=0&showTitle=false&size=125099&status=done&style=none&taskId=udd25864f-61f6-4ff2-8449-7ee0846f994&title=&width=490">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703306022141-d0a3d807-8958-40bf-be40-7b671e318a39.png#averageHue=%23e7e3da&clientId=ubd0b25dd-ffb0-4&from=ui&id=ua1dd8359&originHeight=447&originWidth=703&originalType=binary&ratio=1&rotation=0&showTitle=false&size=140612&status=done&style=none&taskId=udff6f3de-e732-4415-a23d-72eba9dac90&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703307319673-21a90241-0610-4457-b0f5-d0962c841dd4.png#averageHue=%23f6f5f5&clientId=ubd0b25dd-ffb0-4&from=ui&id=uf1fd8d4c&originHeight=430&originWidth=1386&originalType=binary&ratio=1&rotation=0&showTitle=false&size=159620&status=done&style=none&taskId=u99ab68ea-398e-4a36-a35c-770e773b097&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703307642837-00d28687-ef66-4465-82c1-2b88d8f7686c.png#averageHue=%23f5f3f2&clientId=ubd0b25dd-ffb0-4&from=ui&id=uf9fdd229&originHeight=360&originWidth=1019&originalType=binary&ratio=1&rotation=0&showTitle=false&size=156354&status=done&style=none&taskId=u5a67745a-2fbf-4887-8436-7090a0acb3f&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703307799418-f7d19e41-0a04-44bc-b3f5-448fd81de5f9.png#averageHue=%23f8f7f6&clientId=ubd0b25dd-ffb0-4&from=ui&id=ua8935f3e&originHeight=452&originWidth=1436&originalType=binary&ratio=1&rotation=0&showTitle=false&size=182075&status=done&style=none&taskId=u955237f8-a6a1-4ed8-8160-748aa9f2ff5&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703308694055-239cc43f-0c97-45ae-9929-9ba2c214e862.png#averageHue=%23ece7c9&clientId=ubd0b25dd-ffb0-4&from=ui&id=ua823395a&originHeight=136&originWidth=788&originalType=binary&ratio=1&rotation=0&showTitle=false&size=83447&status=done&style=none&taskId=u2cf2afe1-caf1-428d-9bcc-d0c26a5e4b6&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703308812083-db8d23e9-8468-4962-8b21-08aee5676920.png#averageHue=%23ecebe7&clientId=ubd0b25dd-ffb0-4&from=ui&id=u7feab340&originHeight=121&originWidth=639&originalType=binary&ratio=1&rotation=0&showTitle=false&size=51788&status=done&style=none&taskId=u1107e515-0269-4192-b2bb-de8b7218c6e&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703309164966-80e36a4e-32ab-44e7-80d3-8be8d8a97931.png#averageHue=%23efecda&clientId=ubd0b25dd-ffb0-4&from=ui&id=u63dc9218&originHeight=177&originWidth=625&originalType=binary&ratio=1&rotation=0&showTitle=false&size=70111&status=done&style=none&taskId=u385ffe8e-7c03-4b62-a045-65e77b033fe&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310480343-680fbb4a-d1f4-4fb1-8113-a6aa0b04e7d5.png#averageHue=%23fcf8e6&clientId=ubd0b25dd-ffb0-4&from=ui&id=u4dd16767&originHeight=35&originWidth=262&originalType=binary&ratio=1&rotation=0&showTitle=false&size=8940&status=done&style=none&taskId=ub5c3a77e-af43-4f30-abf7-0dd1a0d8499&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310480353-7565ba96-6fa3-4709-b356-192c21f3f307.png#averageHue=%23fbf6e3&clientId=ubd0b25dd-ffb0-4&from=ui&id=u45565bc7&originHeight=34&originWidth=345&originalType=binary&ratio=1&rotation=0&showTitle=false&size=12817&status=done&style=none&taskId=u627c4988-2276-4fef-98d8-c0de686fcd2&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703309908125-506545eb-abbe-45e1-8c39-23cabf561c84.png#averageHue=%23f9f9f8&clientId=ubd0b25dd-ffb0-4&from=ui&id=udd44d768&originHeight=447&originWidth=387&originalType=binary&ratio=1&rotation=0&showTitle=false&size=82840&status=done&style=none&taskId=u5800ede5-c25e-42f8-abd4-459abfceeb8&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310910508-ca89cf6b-34f5-4dee-a33a-23fb5da02dee.png#averageHue=%23f9f8f8&clientId=ubd0b25dd-ffb0-4&from=ui&id=u4d1c39d2&originHeight=419&originWidth=358&originalType=binary&ratio=1&rotation=0&showTitle=false&size=67544&status=done&style=none&taskId=u543dd8a5-6928-4081-b4ae-8804213dd2f&title=">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310830104-3e576d15-1c6c-4bee-b75f-b757282c62ae.png#averageHue=%23faf9f8&clientId=ubd0b25dd-ffb0-4&from=ui&id=waKXx&originHeight=431&originWidth=372&originalType=binary&ratio=1&rotation=0&showTitle=false&size=69011&status=done&style=none&taskId=ubcd30185-5581-44ea-b406-ba2c040c129&title=">
+<meta property="og:image" content="https://i.ibb.co/nQ45LYh/Snipaste-2023-12-23-12-08-17.png">
+<meta property="og:image" content="https://i.ibb.co/b1gNR1g/Snipaste-2023-12-23-11-19-06.png">
+<meta property="og:image" content="https://i.ibb.co/71ksvRx/Snipaste-2023-12-23-11-17-16.png">
+<meta property="og:image" content="https://i.ibb.co/4JLVLKp/Snipaste-2023-12-23-11-33-39.png">
+<meta property="og:image" content="https://i.ibb.co/2kgQM78/Snipaste-2023-12-23-12-05-34.png">
+<meta property="og:image" content="https://i.ibb.co/QH1KyLj/Snipaste-2023-12-23-12-09-53.png">
+<meta property="og:image" content="https://i.ibb.co/ncVFxpw/Snipaste-2023-12-23-12-12-15.png">
+<meta property="og:image" content="https://i.ibb.co/SdKH4vL/Snipaste-2023-12-23-12-13-15.png">
+<meta property="og:image" content="https://i.ibb.co/SdKH4vL/Snipaste-2023-12-23-12-13-15.png">
+<meta property="og:image" content="https://i.ibb.co/KWWQdKd/Snipaste-2023-12-23-12-18-47.png">
+<meta property="og:image" content="https://i.ibb.co/gdpjPv0/Snipaste-2023-12-23-12-22-10.png">
+<meta property="og:image" content="https://i.ibb.co/xgDQJFZ/Snipaste-2023-12-23-12-25-38.png">
+<meta property="og:image" content="https://i.ibb.co/sKRRtRN/Snipaste-2023-12-23-12-31-51.png">
+<meta property="og:image" content="https://i.ibb.co/2kDHL1m/Snipaste-2023-12-23-12-33-05.png">
+<meta property="og:image" content="https://i.ibb.co/sKRRtRN/Snipaste-2023-12-23-12-31-51.png">
+<meta property="og:image" content="https://i.ibb.co/8j529mp/Snipaste-2023-12-23-13-00-34.png">
+<meta property="og:image" content="https://i.ibb.co/kMwkqdd/Snipaste-2023-12-23-13-03-02.png">
+<meta property="og:image" content="https://i.ibb.co/rcKD2Lj/Snipaste-2023-12-23-13-18-00.png">
+<meta property="og:image" content="https://i.ibb.co/QjvHQxb/Snipaste-2023-12-23-13-20-02.png">
+<meta property="og:image" content="https://i.ibb.co/WgqXSZR/Snipaste-2023-12-23-13-25-55.png">
+<meta property="og:image" content="https://i.ibb.co/DwNHwP5/Snipaste-2023-12-23-13-47-33.png">
+<meta property="og:image" content="https://i.ibb.co/7Y7XDV7/Snipaste-2023-12-23-13-47-39.png">
+<meta property="og:image" content="https://i.ibb.co/gWWW4kn/Snipaste-2023-12-23-13-37-35.png">
+<meta property="og:image" content="https://i.ibb.co/L8WNSjp/Snipaste-2023-12-23-13-55-02.png">
+<meta property="og:image" content="https://i.ibb.co/SmDwSdX/Snipaste-2023-12-23-13-53-33.png">
 <meta property="article:published_time" content="2023-12-25T13:25:09.000Z">
-<meta property="article:modified_time" content="2023-12-27T13:26:26.461Z">
+<meta property="article:modified_time" content="2023-12-28T02:37:52.765Z">
 <meta property="article:author" content="Echo">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304515071-9c84d7ba-a31b-48d9-aa8c-3633844b9f38.png#averageHue=%23eaded2&clientId=ubd0b25dd-ffb0-4&from=ui&id=u239e5224&originHeight=624&originWidth=1491&originalType=binary&ratio=1&rotation=0&showTitle=false&size=226856&status=done&style=none&taskId=u31358e3e-e907-4e6e-ba68-94dc6971f14&title=">
+<meta name="twitter:image" content="https://i.ibb.co/nQ45LYh/Snipaste-2023-12-23-12-08-17.png">
   
   
   
@@ -114,7 +113,7 @@
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
 
-<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">JVM-类的生命周期</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">生命周期概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E9%98%B6%E6%AE%B5-Loading"><span class="toc-text">加载阶段 Loading</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-text">查看内存中的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E9%98%B6%E6%AE%B5-Linking"><span class="toc-text">连接阶段 Linking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-text">验证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%A1%88%E4%BE%8B-%E7%89%88%E6%9C%AC%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B"><span class="toc-text">验证案例-版本号的检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E6%83%85%E5%86%B5"><span class="toc-text">一般情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#final-%E4%BF%AE%E9%A5%B0"><span class="toc-text">final 修饰</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90"><span class="toc-text">解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%98%B6%E6%AE%B5-Initialization"><span class="toc-text">初始化阶段 Initialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-text">初始化案例分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">使类初始化的几种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#clinit-%E6%8C%87%E5%AE%9A%E4%B8%8D%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-text">clinit 指定不会出现的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AF%95%E9%A2%98"><span class="toc-text">初始化试题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E9%98%B6%E6%AE%B5-Using"><span class="toc-text">使用阶段 Using</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E9%98%B6%E6%AE%B5-Unloading"><span class="toc-text">卸载阶段 Unloading</span></a></li></ol></div></div></widget>
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">JVM-类的生命周期</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">生命周期概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E9%98%B6%E6%AE%B5-Loading"><span class="toc-text">加载阶段 Loading</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-text">思考题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-text">查看内存中的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E9%98%B6%E6%AE%B5-Linking"><span class="toc-text">连接阶段 Linking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%AA%8C%E8%AF%81"><span class="toc-text">1.验证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%A1%88%E4%BE%8B-%E7%89%88%E6%9C%AC%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B"><span class="toc-text">验证案例-版本号的检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%87%86%E5%A4%87"><span class="toc-text">2.准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E6%83%85%E5%86%B5"><span class="toc-text">一般情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#final-%E4%BF%AE%E9%A5%B0"><span class="toc-text">final 修饰</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A7%A3%E6%9E%90"><span class="toc-text">3.解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%98%B6%E6%AE%B5-Initialization"><span class="toc-text">初始化阶段 Initialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-text">初始化案例分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">使类初始化的几种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#clinit-%E6%8C%87%E5%AE%9A%E4%B8%8D%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-text">clinit 指定不会出现的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AF%95%E9%A2%98"><span class="toc-text">初始化试题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E9%98%B6%E6%AE%B5-Using"><span class="toc-text">使用阶段 Using</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E9%98%B6%E6%AE%B5-Unloading"><span class="toc-text">卸载阶段 Unloading</span></a></li></ol></div></div></widget>
 
 
 
@@ -150,80 +149,83 @@
 <li>使用 Using</li>
 <li>卸载 Unloading</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304515071-9c84d7ba-a31b-48d9-aa8c-3633844b9f38.png#averageHue=%23eaded2&clientId=ubd0b25dd-ffb0-4&from=ui&id=u239e5224&originHeight=624&originWidth=1491&originalType=binary&ratio=1&rotation=0&showTitle=false&size=226856&status=done&style=none&taskId=u31358e3e-e907-4e6e-ba68-94dc6971f14&title=" alt="Snipaste_2023-12-23_12-08-17.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-08-17.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/nQ45LYh/Snipaste-2023-12-23-12-08-17.png"/></div></div>
 <h2 id="加载阶段-Loading">加载阶段 Loading</h2>
 <ol>
 <li><strong>类加载器根据类的全限定名通过不同的渠道以二进制流的方式获取字节码信息</strong>。 程序员可以使用Java代码拓展的不同的渠道，如：本地磁盘上的文件，程序运行时动态代理生成的类（Spring 的 IoC），使用早期的 Applet 技术进行网络传输的类。</li>
 <li>类加载器在加载完类之后，<strong>Java 虚拟机会将字节码中的信息保存到方法区中</strong>。（方法区只是一个虚的概念）</li>
 <li><strong>在方法区中生成一个 InstanceKlass 对象，保存类的所有信息</strong>，里面还包含实现特定功能比如多态的信息。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703301222609-eff3807c-7a39-4083-8273-f7975cec55b4.png#averageHue=%23b2ba99&clientId=u2dee7e63-a318-4&from=ui&height=299&id=u5388f7dd&originHeight=548&originWidth=1346&originalType=binary&ratio=1&rotation=0&showTitle=false&size=185239&status=done&style=none&taskId=u4b412773-3417-4515-9e9e-1854cd54596&title=&width=735" alt="Snipaste_2023-12-23_11-13-29.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_11-13-29.png</span></div></div>
-<ol start="4">
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/b1gNR1g/Snipaste-2023-12-23-11-19-06.png"/></div></div>
+<ol>
 <li><strong>Java 虚拟机还会在堆中生成一份与方法区中数据类似的 java.lang.Class 对象</strong>。作用是在 Java 代码中去获取类的信息，也就是反射的由来。里面会包含字段、方法等信息。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703301444593-22266dcd-047e-4ec8-833e-33f32235027c.png#averageHue=%23f5eac5&clientId=ubd0b25dd-ffb0-4&from=ui&id=u25220795&originHeight=537&originWidth=1345&originalType=binary&ratio=1&rotation=0&showTitle=false&size=225096&status=done&style=none&taskId=u8fa3c99d-040f-49c1-b717-e0732e119a5&title=" alt="Snipaste_2023-12-23_11-17-16.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_11-17-16.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/71ksvRx/Snipaste-2023-12-23-11-17-16.png"/></div></div>
 <p>并且， 堆区的** java.lang.Class** 对象和方法区的<strong>InstanceKlass <strong>对象之间会通过一个引用彼此关联。除此之外， jdk8 以后，堆区的</strong> java.lang.Class</strong> 对象还会存放静态字段的数据。jdk8 之前存放在方法区。</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703301887484-8e6cd52b-65e2-492c-96c5-308bb641ae01.png#averageHue=%23f5d14c&clientId=ubd0b25dd-ffb0-4&from=ui&id=ud3d40358&originHeight=516&originWidth=1391&originalType=binary&ratio=1&rotation=0&showTitle=false&size=151700&status=done&style=none&taskId=ud316340b-a081-43cf-b0cb-532fd6ba00a&title=" alt="Snipaste_2023-12-23_11-19-06.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_11-19-06.png</span></div></div>
-<ul>
-<li>
-<p>思考<br />
-:::info<br />
-问：<br />
-为什么是创建两个对象而不是一个？<br />
-答：</p>
-<p>1、首先，方法区的**InstanceKlass **对象是通过 C++来编写的，Java 代码无法直接操作，所以 Java 虚拟机就在堆区创建了一个使用 Java 语言包装的 <strong>java.lang.Class</strong> 对象，可以在代码中获取到。</p>
-</li>
-</ul>
-<p>2、堆区的** java.lang.Class** 对象中的字段会少于方法区的<strong>InstanceKlass <strong>对象中的字段，比如虚方法表，这是 Java 虚拟机底层实现多态使用的，而对于开发者来说，只需要访问堆区中的</strong> java.lang.Class</strong> 对象而不需要访问方法区中所有的信息。也很好的控制开发者访问数据的范围</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703302432992-a751c784-8f22-46b8-9b49-ba6da6ba67a8.png#averageHue=%23f0e20d&clientId=ubd0b25dd-ffb0-4&from=ui&id=ubb945a5c&originHeight=516&originWidth=1105&originalType=binary&ratio=1&rotation=0&showTitle=false&size=155642&status=done&style=none&taskId=ufb8a41e3-cb3c-490e-865a-683df51c714&title=" alt="Snipaste_2023-12-23_11-33-39.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_11-33-39.png</span></div></div>
-<p>:::</p>
+<h3 id="思考题">思考题</h3>
+<blockquote>
+<p>问：为什么是创建两个对象而不是一个？</p>
+</blockquote>
+<blockquote>
+<p>答：<br />
+1、首先，方法区的<strong>InstanceKlass</strong>对象是通过 C++来编写的，Java 代码无法直接操作，所以 Java 虚拟机就在堆区创建了一个使用 Java 语言包装的 <strong>java.lang.Class</strong> 对象，可以在代码中获取到。<br />
+2、堆区的<strong>java.lang.Class</strong> 对象中的字段会少于方法区的<strong>InstanceKlass</strong>对象中的字段，比如虚方法表，这是 Java 虚拟机底层实现多态使用的，而对于开发者来说，只需要访问堆区中的** java.lang.Class** 对象而不需要访问方法区中所有的信息。也很好的控制开发者访问数据的范围。</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/4JLVLKp/Snipaste-2023-12-23-11-33-39.png"/></div></div>
+</blockquote>
 <h3 id="查看内存中的对象">查看内存中的对象</h3>
 <ul>
-<li>可以使用 JDK自带的hsdb工具查看Java虚拟机内存信息。工具位于JDK安装目录下lib文件夹中的sa-jdi.jar中。</li>
+<li>可以使用 JDK自带的hsdb工具查看Java虚拟机内存信息。工具位于JDK安装目录下<strong>lib文件夹中的sa-jdi.jar</strong>中。</li>
 </ul>
+<blockquote>
 <p><em>启动命令：java -cp sa-jdi.jar sun.jvm.hotspot.HSDB</em></p>
+</blockquote>
 <ul>
-<li>jps：展示所有的 java 进程号</li>
+<li><strong>jps</strong>：展示所有的 java 进程号</li>
 </ul>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304346512-657d2a8e-38f6-4e8a-b30d-1015d32978c4.png#averageHue=%23e7dbd4&clientId=ubd0b25dd-ffb0-4&from=ui&id=ued6c7032&originHeight=490&originWidth=773&originalType=binary&ratio=1&rotation=0&showTitle=false&size=174609&status=done&style=none&taskId=uf3ab314f-0a7b-466e-8bce-d28902b7ca0&title=" alt="Snipaste_2023-12-23_12-05-34.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-05-34.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/2kgQM78/Snipaste-2023-12-23-12-05-34.png"/></div></div>
 <h2 id="连接阶段-Linking">连接阶段 Linking</h2>
-<h3 id="验证">验证</h3>
+<h3 id="1-验证">1.验证</h3>
 <p>验证的主要目的是检测Java字节码文件是否遵守了《Java虚拟机规范》中的约束。这个阶段一般不需要程序员参与。<br />
 主要包含如下四部分，具体详见《Java虚拟机规范》：</p>
 <ol>
 <li>文件格式验证，比如文件是否以0xCAFEBABE开头（即魔数是否正确），主次版本号是否满足当前Java虚拟机版本要求。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304709948-b748208e-279e-457d-9e77-37d7fb9a266c.png#averageHue=%23ececec&clientId=ubd0b25dd-ffb0-4&from=ui&id=u9d700ae0&originHeight=318&originWidth=1132&originalType=binary&ratio=1&rotation=0&showTitle=false&size=212448&status=done&style=none&taskId=ufb4139a1-9eeb-48f8-ab80-0d1f8f57734&title=" alt="Snipaste_2023-12-23_12-09-53.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-09-53.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/QH1KyLj/Snipaste-2023-12-23-12-09-53.png"/></div></div>
 <ol start="2">
 <li>元信息验证，例如类必须有父类（super不能为空）。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304775995-4edad103-5be1-4d9d-b70e-437135b69b69.png#averageHue=%23f0eeee&clientId=ubd0b25dd-ffb0-4&from=ui&id=ub24c99f3&originHeight=303&originWidth=529&originalType=binary&ratio=1&rotation=0&showTitle=false&size=59753&status=done&style=none&taskId=u245a1076-4c16-4162-a577-e40f030b6b8&title=" alt="Snipaste_2023-12-23_12-12-15.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-12-15.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/ncVFxpw/Snipaste-2023-12-23-12-12-15.png"/></div></div>
 <ol start="3">
 <li>验证程序执行指令的语义，比如方法内的指令执行中跳转到不正确的位置。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703304808638-342a933f-c90a-4239-ae2b-03b0b5fdd92b.png#averageHue=%23e4e0d7&clientId=ubd0b25dd-ffb0-4&from=ui&id=u3f6236a1&originHeight=263&originWidth=419&originalType=binary&ratio=1&rotation=0&showTitle=false&size=49757&status=done&style=none&taskId=u11050504-f6e9-4036-a0c0-708acf3cbb3&title=" alt="Snipaste_2023-12-23_12-13-15.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-13-15.png</span></div></div>
-<ol start="4">
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/SdKH4vL/Snipaste-2023-12-23-12-13-15.png"/></div></div>
+<ol>
 <li>符号引用验证，例如是否访问了其他类中private的方法等。</li>
 </ol>
 <h4 id="验证案例-版本号的检测">验证案例-版本号的检测</h4>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305000215-23fd420c-e7f8-4be3-ba94-523fe835ce2a.png#averageHue=%23f1eeeb&clientId=ubd0b25dd-ffb0-4&from=ui&id=u38cf471a&originHeight=595&originWidth=1441&originalType=binary&ratio=1&rotation=0&showTitle=false&size=487034&status=done&style=none&taskId=ub02bbab8-7925-47c7-add5-f334044c480&title=" alt="Snipaste_2023-12-23_12-16-30.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-16-30.png</span></div></div>
-<h3 id="准备">准备</h3>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/SdKH4vL/Snipaste-2023-12-23-12-13-15.png"/></div></div>
+<h3 id="2-准备">2.准备</h3>
 <h4 id="一般情况">一般情况</h4>
 <ul>
-<li>准备阶段会为静态变量（static）分配内存并设置初始值，而不会直接对静态变量赋值，而将 value 的值变成 1 会在初始化阶段完成。 <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305135702-5644357f-f386-47d2-95ea-34f648f49dc5.png#averageHue=%23f4ec70&clientId=ubd0b25dd-ffb0-4&from=ui&id=uf991c8c7&originHeight=413&originWidth=1405&originalType=binary&ratio=1&rotation=0&showTitle=false&size=139016&status=done&style=none&taskId=u0075bca9-e9fb-41ed-8e6a-ddc9e62ed36&title=" alt="Snipaste_2023-12-23_12-18-47.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-18-47.png</span></div></div></li>
-<li>各数据类型对应的初始值</li>
+<li>
+<p>准备阶段会为静态变量（static）分配内存并设置初始值，而不会直接对静态变量赋值，而将 value 的值变成 1 会在初始化阶段完成。</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/KWWQdKd/Snipaste-2023-12-23-12-18-47.png"/></div></div>
+</li>
+<li>
+<p>各数据类型对应的初始值</p>
+</li>
 </ul>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305338349-a45ff6f9-20db-47b3-8fbf-925ed82a7fb4.png#averageHue=%23e3d4d3&clientId=ubd0b25dd-ffb0-4&from=ui&id=u316b93e5&originHeight=464&originWidth=1387&originalType=binary&ratio=1&rotation=0&showTitle=false&size=92646&status=done&style=none&taskId=ucbb3fca0-cf25-46ca-bfe4-9bc5ee7a361&title=" alt="Snipaste_2023-12-23_12-22-10.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-22-10.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/gdpjPv0/Snipaste-2023-12-23-12-22-10.png"/></div></div>
 <p>如果不对静态变量设置初始值，那么在该内存可能会残留之前的无关数据，影响提高代码的可读性、可维护性，难以避免潜在的错误。</p>
 <h4 id="final-修饰">final 修饰</h4>
 <ul>
 <li>final修饰的基本数据类型的静态变量，准备阶段直接会将代码中的值进行赋值，包括字符串。</li>
 </ul>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305547539-1fe1b66c-6f79-46b5-8be2-b0863910720e.png#averageHue=%23f5ed78&clientId=ubd0b25dd-ffb0-4&from=ui&id=ub006db1b&originHeight=408&originWidth=1289&originalType=binary&ratio=1&rotation=0&showTitle=false&size=126241&status=done&style=none&taskId=u5b31d065-0346-4953-ae9a-f9be5199203&title=" alt="Snipaste_2023-12-23_12-25-38.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-25-38.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/xgDQJFZ/Snipaste-2023-12-23-12-25-38.png"/></div></div>
 <ul>
 <li>注：本章涉及到的内存结构只讨论JDK8及之后的版本，8之前的版本后续章节详述。</li>
 </ul>
-<h3 id="解析">解析</h3>
+<h3 id="3-解析">3.解析</h3>
 <ul>
 <li>将常量池中的符号引用替换成指向内存的直接引用
 <ul>
@@ -231,11 +233,11 @@
 </ul>
 </li>
 </ul>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703305953903-edaf198c-d853-4a81-9cf0-5fb1f80b6c7d.png#averageHue=%23eeeded&clientId=ubd0b25dd-ffb0-4&from=ui&height=327&id=u5df23c80&originHeight=509&originWidth=763&originalType=binary&ratio=1&rotation=0&showTitle=false&size=125099&status=done&style=none&taskId=udd25864f-61f6-4ff2-8449-7ee0846f994&title=&width=490" alt="Snipaste_2023-12-23_12-31-51.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-31-51.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/sKRRtRN/Snipaste-2023-12-23-12-31-51.png"/></div></div>
 <ul>
 <li>直接引用不在使用编号，而是使用内存中地址进行访问具体的数据。</li>
 </ul>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703306022141-d0a3d807-8958-40bf-be40-7b671e318a39.png#averageHue=%23e7e3da&clientId=ubd0b25dd-ffb0-4&from=ui&id=ua1dd8359&originHeight=447&originWidth=703&originalType=binary&ratio=1&rotation=0&showTitle=false&size=140612&status=done&style=none&taskId=udff6f3de-e732-4415-a23d-72eba9dac90&title=" alt="Snipaste_2023-12-23_12-33-05.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-33-05.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/2kDHL1m/Snipaste-2023-12-23-12-33-05.png"/></div></div>
 <h2 id="初始化阶段-Initialization">初始化阶段 Initialization</h2>
 <ul>
 <li>初始化阶段会执行静态代码块中的代码，并为静态变量赋值</li>
@@ -245,19 +247,17 @@
 </ul>
 </li>
 </ul>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703307319673-21a90241-0610-4457-b0f5-d0962c841dd4.png#averageHue=%23f6f5f5&clientId=ubd0b25dd-ffb0-4&from=ui&id=uf1fd8d4c&originHeight=430&originWidth=1386&originalType=binary&ratio=1&rotation=0&showTitle=false&size=159620&status=done&style=none&taskId=u99ab68ea-398e-4a36-a35c-770e773b097&title=" alt="Snipaste_2023-12-23_12-55-07.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_12-55-07.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/sKRRtRN/Snipaste-2023-12-23-12-31-51.png"/></div></div>
 <h3 id="初始化案例分析">初始化案例分析</h3>
 <ol>
 <li></li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703307642837-00d28687-ef66-4465-82c1-2b88d8f7686c.png#averageHue=%23f5f3f2&clientId=ubd0b25dd-ffb0-4&from=ui&id=uf9fdd229&originHeight=360&originWidth=1019&originalType=binary&ratio=1&rotation=0&showTitle=false&size=156354&status=done&style=none&taskId=u5a67745a-2fbf-4887-8436-7090a0acb3f&title=" alt="Snipaste_2023-12-23_13-00-34.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-00-34.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/8j529mp/Snipaste-2023-12-23-13-00-34.png"/></div></div>
 <ol start="2">
 <li>将代码两句 顺序颠倒</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703307799418-f7d19e41-0a04-44bc-b3f5-448fd81de5f9.png#averageHue=%23f8f7f6&clientId=ubd0b25dd-ffb0-4&from=ui&id=ua8935f3e&originHeight=452&originWidth=1436&originalType=binary&ratio=1&rotation=0&showTitle=false&size=182075&status=done&style=none&taskId=u955237f8-a6a1-4ed8-8160-748aa9f2ff5&title=" alt="Snipaste_2023-12-23_13-03-02.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-03-02.png</span></div></div>
-<p>:::info<br />
-由此可见，clinit方法中的执行顺序与Java中编写的顺序是一致的。<br />
-:::</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/kMwkqdd/Snipaste-2023-12-23-13-03-02.png" alt="Snipaste_2023-12-23_13-03-02.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-03-02.png</span></div></div>
+<p><strong>由此可见，clinit方法中的执行顺序与Java中编写的顺序是一致的。</strong></p>
 <h3 id="使类初始化的几种方式">使类初始化的几种方式</h3>
 <ol>
 <li>访问一个类的静态变量或者静态方法的时候，会初始化这个类。</li>
@@ -267,16 +267,16 @@
 <li>调用 <strong>Class.forName(String className)</strong>。</li>
 </ol>
 <p>注：Class.forName 是个重载方法，也可以指定不初始化。</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703308694055-239cc43f-0c97-45ae-9929-9ba2c214e862.png#averageHue=%23ece7c9&clientId=ubd0b25dd-ffb0-4&from=ui&id=ua823395a&originHeight=136&originWidth=788&originalType=binary&ratio=1&rotation=0&showTitle=false&size=83447&status=done&style=none&taskId=u2cf2afe1-caf1-428d-9bcc-d0c26a5e4b6&title=" alt="Snipaste_2023-12-23_13-18-00.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-18-00.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/rcKD2Lj/Snipaste-2023-12-23-13-18-00.png"/></div></div>
 <ul>
 <li>指定 initialize</li>
 </ul>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703308812083-db8d23e9-8468-4962-8b21-08aee5676920.png#averageHue=%23ecebe7&clientId=ubd0b25dd-ffb0-4&from=ui&id=u7feab340&originHeight=121&originWidth=639&originalType=binary&ratio=1&rotation=0&showTitle=false&size=51788&status=done&style=none&taskId=u1107e515-0269-4192-b2bb-de8b7218c6e&title=" alt="Snipaste_2023-12-23_13-20-02.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-20-02.png</span></div></div>
-<ol start="3">
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/QjvHQxb/Snipaste-2023-12-23-13-20-02.png"/></div></div>
+<ol>
 <li>通过 new 关键字创建该对象。</li>
 <li>执行 Main 方法的当前类。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703309164966-80e36a4e-32ab-44e7-80d3-8be8d8a97931.png#averageHue=%23efecda&clientId=ubd0b25dd-ffb0-4&from=ui&id=u63dc9218&originHeight=177&originWidth=625&originalType=binary&ratio=1&rotation=0&showTitle=false&size=70111&status=done&style=none&taskId=u385ffe8e-7c03-4b62-a045-65e77b033fe&title=" alt="Snipaste_2023-12-23_13-25-55.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-25-55.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/WgqXSZR/Snipaste-2023-12-23-13-25-55.png"/></div></div>
 <blockquote>
 <p>**添加-XX:+TraceClassLoading 参数可以打印出加载并初始化的类 **</p>
 </blockquote>
@@ -289,30 +289,30 @@
 <p><strong>有静态变量声明，但没有赋值语句</strong>。</p>
 </li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310480343-680fbb4a-d1f4-4fb1-8113-a6aa0b04e7d5.png#averageHue=%23fcf8e6&clientId=ubd0b25dd-ffb0-4&from=ui&id=u4dd16767&originHeight=35&originWidth=262&originalType=binary&ratio=1&rotation=0&showTitle=false&size=8940&status=done&style=none&taskId=ub5c3a77e-af43-4f30-abf7-0dd1a0d8499&title=" alt="Snipaste_2023-12-23_13-47-33.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-47-33.png</span></div></div>
-<ol start="3">
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/DwNHwP5/Snipaste-2023-12-23-13-47-33.png"/></div></div>
+<ol>
 <li><strong>静态变量的定义使用 final 关键字</strong>，这类变量会在准备阶段进行初始化。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310480353-7565ba96-6fa3-4709-b356-192c21f3f307.png#averageHue=%23fbf6e3&clientId=ubd0b25dd-ffb0-4&from=ui&id=u45565bc7&originHeight=34&originWidth=345&originalType=binary&ratio=1&rotation=0&showTitle=false&size=12817&status=done&style=none&taskId=u627c4988-2276-4fef-98d8-c0de686fcd2&title=" alt="Snipaste_2023-12-23_13-47-39.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-47-39.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/7Y7XDV7/Snipaste-2023-12-23-13-47-39.png"/></div></div>
 <h3 id="初始化试题">初始化试题</h3>
 <ol>
 <li>求运行结果</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703309908125-506545eb-abbe-45e1-8c39-23cabf561c84.png#averageHue=%23f9f9f8&clientId=ubd0b25dd-ffb0-4&from=ui&id=udd44d768&originHeight=447&originWidth=387&originalType=binary&ratio=1&rotation=0&showTitle=false&size=82840&status=done&style=none&taskId=u5800ede5-c25e-42f8-abd4-459abfceeb8&title=" alt="Snipaste_2023-12-23_13-37-35.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-37-35.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/gWWW4kn/Snipaste-2023-12-23-13-37-35.png"/></div></div>
 <ul>
 <li>**new的执行顺序：实例代码块-&gt;构造函数。**初始化只会加载静态区中的数据，且静态区数据只会加载一次，所以是DACBCB。</li>
 </ul>
-<ol start="2">
+<ol>
 <li>求运行结果</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310910508-ca89cf6b-34f5-4dee-a33a-23fb5da02dee.png#averageHue=%23f9f8f8&clientId=ubd0b25dd-ffb0-4&from=ui&id=u4d1c39d2&originHeight=419&originWidth=358&originalType=binary&ratio=1&rotation=0&showTitle=false&size=67544&status=done&style=none&taskId=u543dd8a5-6928-4081-b4ae-8804213dd2f&title=" alt="Snipaste_2023-12-23_13-55-02.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-55-02.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/L8WNSjp/Snipaste-2023-12-23-13-55-02.png"/></div></div>
 <ul>
-<li>结果：答案为 2，** 子类的初始化clinit调用之前，会先调用父类的clinit初始化方法。**</li>
+<li>结果：答案为 2，<strong>子类的初始化clinit调用之前，会先调用父类的clinit初始化方法。</strong></li>
 </ul>
 <ol start="3">
 <li>将 new B02()去掉，结果会怎么样？</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.nlark.com/yuque/0/2023/png/34523858/1703310830104-3e576d15-1c6c-4bee-b75f-b757282c62ae.png#averageHue=%23faf9f8&clientId=ubd0b25dd-ffb0-4&from=ui&id=waKXx&originHeight=431&originWidth=372&originalType=binary&ratio=1&rotation=0&showTitle=false&size=69011&status=done&style=none&taskId=ubcd30185-5581-44ea-b406-ba2c040c129&title=" alt="Snipaste_2023-12-23_13-53-33.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-53-33.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/SmDwSdX/Snipaste-2023-12-23-13-53-33.png"/></div></div>
 <ul>
 <li>结果：答案为 1，<strong>直接访问父类的静态变量，不会触发子类的初始化。</strong></li>
 </ul>
@@ -323,7 +323,7 @@
 <ul>
 <li>结果：答案是控制台为空，因为<strong>数组的创建不会导致数组元素的类进行初始化</strong></li>
 </ul>
-<ol>
+<ol start="5">
 <li>求运行结果</li>
 </ol>
 <div class="tag-plugin note" color="green" child="codeblock"><div class="body"><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(Demo2.a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Demo2</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> Integer.valueOf(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块run&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 控制台：</span></span><br><span class="line"><span class="comment">// 静态代码块run</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure></div></div>
@@ -343,7 +343,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/12/24/JVM-%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6/">JVM-字节码文件</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/12/26/JVM-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">JVM-运行时数据区</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/12/25/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/">JVM-类加载器</a></div></section></div>
 
 
 <div class="related-wrap reveal" id="related-posts">
@@ -351,7 +351,7 @@
       <div class='title cap theme'>您可能感兴趣的文章</div>
     </section>
     <section class='body'>
-    <div class="related-posts"><a class="item" href="\2023\12\24\JVM-字节码文件\" title="JVM-字节码文件"><span class="title">JVM-字节码文件</span><span class="excerpt">学习字节码文件的组成和常见的字节码指令，以及相关的字节码工具。</span></a><a class="item" href="\2023\05\22\MySQL-基础(1)\" title="MySQL-基础(1)"><span class="title">MySQL-基础(1)</span><span class="excerpt">MySQL数据库基础部分的学习笔记，SQL的基本认识。</span></a></div></section></div>
+    <div class="related-posts"><a class="item" href="\2023\12\24\JVM-字节码文件\" title="JVM-字节码文件"><span class="title">JVM-字节码文件</span><span class="excerpt">学习字节码文件的组成和常见的字节码指令，以及相关的字节码工具。</span></a><a class="item" href="\2023\12\27\JVM-垃圾回收\" title="JVM-垃圾回收"><span class="title">JVM-垃圾回收</span></a><a class="item" href="\2023\12\25\JVM-类加载器\" title="JVM-类加载器"><span class="title">JVM-类加载器</span></a><a class="item" href="\2023\12\26\JVM-运行时数据区\" title="JVM-运行时数据区"><span class="title">JVM-运行时数据区</span></a><a class="item" href="\2023\05\22\MySQL-基础(1)\" title="MySQL-基础(1)"><span class="title">MySQL-基础(1)</span><span class="excerpt">MySQL数据库基础部分的学习笔记，SQL的基本认识。</span></a></div></section></div>
 
 
 
