@@ -23,12 +23,12 @@
   <title>JVM-类的生命周期 - 小破站</title>
 
   
-    <meta name="description" content="类的生命周期的认识">
+    <meta name="description" content="类的生命周期的认识。加载、连接(验证、准备、解析)、初始化、使用、卸载。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM-类的生命周期">
 <meta property="og:url" content="https://strivingto.top/2023/12/25/JVM-%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
 <meta property="og:site_name" content="小破站">
-<meta property="og:description" content="类的生命周期的认识">
+<meta property="og:description" content="类的生命周期的认识。加载、连接(验证、准备、解析)、初始化、使用、卸载。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/nQ45LYh/Snipaste-2023-12-23-12-08-17.png">
 <meta property="og:image" content="https://i.ibb.co/b1gNR1g/Snipaste-2023-12-23-11-19-06.png">
@@ -55,8 +55,8 @@
 <meta property="og:image" content="https://i.ibb.co/gWWW4kn/Snipaste-2023-12-23-13-37-35.png">
 <meta property="og:image" content="https://i.ibb.co/L8WNSjp/Snipaste-2023-12-23-13-55-02.png">
 <meta property="og:image" content="https://i.ibb.co/SmDwSdX/Snipaste-2023-12-23-13-53-33.png">
-<meta property="article:published_time" content="2023-12-25T13:25:09.000Z">
-<meta property="article:modified_time" content="2023-12-29T13:03:05.507Z">
+<meta property="article:published_time" content="2023-12-25T01:25:09.000Z">
+<meta property="article:modified_time" content="2024-01-03T11:24:53.181Z">
 <meta property="article:author" content="Echo">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary_large_image">
@@ -129,7 +129,7 @@
 
 
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-12-25T13:25:09.000Z">2023-12-25</time></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-12-25T01:25:09.000Z">2023-12-25</time></div></div>
 
 <article class='md-text content post'>
 <h1 class="article-title"><span>JVM-类的生命周期</span></h1>
@@ -208,7 +208,7 @@
 <h4 id="一般情况">一般情况</h4>
 <ul>
 <li>
-<p>准备阶段会为静态变量（static）分配内存并设置初始值，而不会直接对静态变量赋值，而将 value 的值变成 1 会在初始化阶段完成。</p>
+<p>准备阶段会<strong>为静态变量（static）分配内存并设置初始值</strong>，而不会直接对静态变量赋值，而将 value 的值变成 1 会在初始化阶段完成。</p>
 <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/KWWQdKd/Snipaste-2023-12-23-12-18-47.png"/></div></div>
 </li>
 <li>
@@ -235,15 +235,15 @@
 </ul>
 <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/sKRRtRN/Snipaste-2023-12-23-12-31-51.png"/></div></div>
 <ul>
-<li>直接引用不在使用编号，而是使用内存中地址进行访问具体的数据。</li>
+<li>直接引用不再使用编号，而是使用内存中地址进行访问具体的数据。</li>
 </ul>
 <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/2kDHL1m/Snipaste-2023-12-23-12-33-05.png"/></div></div>
 <h2 id="初始化阶段-Initialization">初始化阶段 Initialization</h2>
 <ul>
-<li>初始化阶段会执行静态代码块中的代码，并为静态变量赋值</li>
+<li>初始化阶段<strong>会执行静态代码块中的代码，并为静态变量赋值</strong></li>
 <li>初始化阶段会执行字节码文件中clinit部分的字节码指令
 <ul>
-<li>clinit：cl 表示 class ，init 表示初始化，即类的初始化</li>
+<li><strong>clinit</strong>：cl 表示 class ，init 表示初始化，即类的初始化</li>
 </ul>
 </li>
 </ul>
@@ -256,7 +256,7 @@
 <ol start="2">
 <li>将代码两句 顺序颠倒</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/kMwkqdd/Snipaste-2023-12-23-13-03-02.png" alt="Snipaste_2023-12-23_13-03-02.png"/></div><div class="image-meta"><span class="image-caption center">Snipaste_2023-12-23_13-03-02.png</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/kMwkqdd/Snipaste-2023-12-23-13-03-02.png"/></div></div>
 <p><strong>由此可见，clinit方法中的执行顺序与Java中编写的顺序是一致的。</strong></p>
 <h3 id="使类初始化的几种方式">使类初始化的几种方式</h3>
 <ol>
@@ -272,13 +272,13 @@
 <li>指定 initialize</li>
 </ul>
 <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/QjvHQxb/Snipaste-2023-12-23-13-20-02.png"/></div></div>
-<ol>
+<ol start="3">
 <li>通过 new 关键字创建该对象。</li>
 <li>执行 Main 方法的当前类。</li>
 </ol>
 <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/WgqXSZR/Snipaste-2023-12-23-13-25-55.png"/></div></div>
 <blockquote>
-<p>**添加-XX:+TraceClassLoading 参数可以打印出加载并初始化的类 **</p>
+<p><strong>添加-XX:+TraceClassLoading 参数可以打印出加载并初始化的类</strong></p>
 </blockquote>
 <h3 id="clinit-指定不会出现的情况">clinit 指定不会出现的情况</h3>
 <ol>
@@ -343,7 +343,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/12/26/JVM-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">JVM-运行时数据区</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/12/25/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/">JVM-类加载器</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/12/25/JVM-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/">JVM-类加载器</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/12/24/JVM-%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6/">JVM-字节码文件</a></div></section></div>
 
 
 <div class="related-wrap reveal" id="related-posts">
@@ -351,7 +351,7 @@
       <div class='title cap theme'>您可能感兴趣的文章</div>
     </section>
     <section class='body'>
-    <div class="related-posts"><a class="item" href="\2023\12\24\JVM-字节码文件\" title="JVM-字节码文件"><span class="title">JVM-字节码文件</span><span class="excerpt">学习字节码文件的组成和常见的字节码指令，以及相关的字节码工具。</span></a><a class="item" href="\2023\12\27\JVM-垃圾回收\" title="JVM-垃圾回收"><span class="title">JVM-垃圾回收</span></a><a class="item" href="\2023\12\25\JVM-类加载器\" title="JVM-类加载器"><span class="title">JVM-类加载器</span></a><a class="item" href="\2023\12\26\JVM-运行时数据区\" title="JVM-运行时数据区"><span class="title">JVM-运行时数据区</span></a><a class="item" href="\2023\05\22\MySQL-基础(1)\" title="MySQL-基础(1)"><span class="title">MySQL-基础(1)</span><span class="excerpt">MySQL数据库基础部分的学习笔记，SQL的基本认识。</span></a></div></section></div>
+    <div class="related-posts"><a class="item" href="\2023\12\27\JVM-垃圾回收\" title="JVM-垃圾回收"><span class="title">JVM-垃圾回收</span></a><a class="item" href="\2023\12\24\JVM-字节码文件\" title="JVM-字节码文件"><span class="title">JVM-字节码文件</span><span class="excerpt">学习字节码文件的组成和常见的字节码指令，以及相关的字节码工具。</span></a><a class="item" href="\2023\12\26\JVM-运行时数据区\" title="JVM-运行时数据区"><span class="title">JVM-运行时数据区</span></a><a class="item" href="\2023\12\25\JVM-类加载器\" title="JVM-类加载器"><span class="title">JVM-类加载器</span><span class="excerpt">类加载器的作用是将.class文件加载到内存中，并对类进行解释和校验。</span></a><a class="item" href="\2023\05\22\MySQL-基础(1)\" title="MySQL-基础(1)"><span class="title">MySQL-基础(1)</span><span class="excerpt">MySQL数据库基础部分的学习笔记，SQL的基本认识。</span></a></div></section></div>
 
 
 
