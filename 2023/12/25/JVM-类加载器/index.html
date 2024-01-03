@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://i.ibb.co/HXD4Wvr/Snipaste-2023-12-24-21-51-43.png">
 <meta property="og:image" content="https://i.ibb.co/JvqnxBT/Snipaste-2023-12-24-21-53-47.png">
 <meta property="article:published_time" content="2023-12-25T02:42:23.000Z">
-<meta property="article:modified_time" content="2024-01-03T11:59:51.236Z">
+<meta property="article:modified_time" content="2024-01-03T12:01:14.027Z">
 <meta property="article:author" content="Echo">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary_large_image">
@@ -512,16 +512,15 @@
 <li>由于JDK9引入了module的概念，类加载器在设计上发生了很多变化。</li>
 </ul>
 <ol>
-<li>
-<p>启动类加载器使用Java编写，位于<strong>jdk.internal.loader.ClassLoaders</strong>类中.Java中的BootClassLoader继承自BuiltinClassLoader实现从模块中找到要加载的字节码资源文件。</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/HXD4Wvr/Snipaste-2023-12-24-21-51-43.png"/></div></div>
+<li>启动类加载器使用Java编写，位于<strong>jdk.internal.loader.ClassLoaders</strong>类中.Java中的BootClassLoader继承自BuiltinClassLoader实现从模块中找到要加载的字节码资源文件。
 <ul>
 <li>启动类加载器依然无法通过java代码获取到，返回的仍然是null，保持了统一。</li>
 </ul>
 </li>
-<li>
-<p>扩展类加载器被替换成了平台类加载器（Platform Class Loader）。平台类加载器遵循模块化方式加载字节码文件，所以继承关系从 URLClassLoader变成了 BuiltinClassLoader，BuiltinClassLoader实现了从模块中加载字节码文件。平台类加载器的存在更多的是为了与老版本的设计方案兼容，自身没有特殊的逻辑。</p>
-</li>
+</ol>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/HXD4Wvr/Snipaste-2023-12-24-21-51-43.png"/></div></div>
+<ol>
+<li>扩展类加载器被替换成了平台类加载器（Platform Class Loader）。平台类加载器遵循模块化方式加载字节码文件，所以继承关系从 URLClassLoader变成了 BuiltinClassLoader，BuiltinClassLoader实现了从模块中加载字节码文件。平台类加载器的存在更多的是为了与老版本的设计方案兼容，自身没有特殊的逻辑。</li>
 </ol>
 <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.ibb.co/JvqnxBT/Snipaste-2023-12-24-21-53-47.png"/></div></div>
 
